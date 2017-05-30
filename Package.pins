@@ -65,7 +65,7 @@
       "package": "SwiftSMTP",
       "reason": null,
       "repositoryURL": "https://github.com/IBM-Swift/Swift-SMTP",
-      "version": "1.0.0"
+      "version": "1.0.1"
     },
     {
       "package": "SwiftyJSON",

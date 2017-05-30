@@ -38,7 +38,7 @@ let ssl = SSL(withChainFilePath: cert,
 
 // The handle to the SMTP server with your login info
 let smtp = SMTP(hostname: hostname,
-                user: email,
+                email: email,
                 password: password,
                 ssl: ssl)
 
