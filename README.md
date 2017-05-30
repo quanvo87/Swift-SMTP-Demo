@@ -1,5 +1,5 @@
 # Swift-SMTP-Demo
-A demo server that uses Swift-SMTP to send emails.
+A demo server that uses [Swift-SMTP](https://github.com/IBM-Swift/Swift-SMTP) to send emails.
 
 ## Getting Started
 
