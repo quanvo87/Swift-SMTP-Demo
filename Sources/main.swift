@@ -13,6 +13,8 @@ let email = "kiturasmtp@gmail.com"
 // The password to the email
 let password = "ibm12345"
 
+// Our SSL certificate files are in the same folder as `main.swift`. We are just
+// grabbing the path here to reference them later.
 let root = #file
     .characters
     .split(separator: "/", omittingEmptySubsequences: false)
@@ -24,20 +26,27 @@ let root = #file
 #if os(Linux)
 let cert = root + "/cert.pem"
 let key = root + "/key.pem"
-let ssl = SSL(withCACertificateDirectory: nil, usingCertificateFile: cert, withKeyFile: key)
+let ssl = SSL(withCACertificateDirectory: nil,
+              usingCertificateFile: cert,
+              withKeyFile: key)
 #else
 let cert = root + "/cert.pfx"
 let certPassword = "kitura"
-let ssl = SSL(withChainFilePath: cert, withPassword: certPassword)
+let ssl = SSL(withChainFilePath: cert,
+              withPassword: certPassword)
 #endif
 
 // The handle to the SMTP server with your login info
-let smtp = SMTP(hostname: hostname, user: email, password: password, ssl: ssl)
+let smtp = SMTP(hostname: hostname,
+                user: email,
+                password: password,
+                ssl: ssl)
 
 // The `User` object that will act as our sender
-let sender = User(name: "Swift-SMTP Tester", email: email)
+let sender = User(name: "Swift-SMTP Tester",
+                  email: email)
 
-// MARK: - Kitura
+// MARK: - Kitura HTTP Server
 HeliumLogger.use()
 
 let router = Router()
@@ -45,17 +54,20 @@ let router = Router()
 // Serve our static index.html
 router.all("/", middleware: StaticFileServer())
 
-// Send an email to the given parameter
+// Send an email on this route
 router.get("/send/:email") { req, res, _ in
 
-    // Get the email
+    // Get the email from the parameters
     let email = req.parameters["email"] ?? ""
 
     // Create a `User` object that will act as our receiver
     let receiver = User(email: email)
 
     // Create the `Mail` object that will be sent
-    let mail = Mail(from: sender, to: [receiver], subject: "Swift-SMTP Test", text: "Hello, world!")
+    let mail = Mail(from: sender,
+                    to: [receiver],
+                    subject: "Swift-SMTP Test",
+                    text: "Hello, world!")
 
     // Send the mail object
     smtp.send(mail, completion: { (error) in
