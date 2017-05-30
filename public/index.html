@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h3>Swift-SMTP Demo</h3>
+
+  <p>Enter your email below and click `Send` to send a test email.</p>
+
+  <input type="text" id="emailTextBox">
+
+  <button onclick="send()">Send</button>
+
+  <p id="demo"></p>
+
+  <script>
+  function send() {
+    var demo = document.getElementById("demo");
+    var email = document.getElementById("emailTextBox").value;
+
+    if (email == "") {
+      demo.innerHTML = "Please enter a valid email.";
+      return;
+    }
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      demo.innerHTML = "Sending...";
+
+      if (this.readyState == 4) {
+        if (this.status == 200) {
+          demo.innerHTML = this.responseText;
+        } else {
+          demo.innerHTML = "Error sending email.";
+        }
+      }
+    };
+
+    xhttp.open("GET", "/send/".concat(email), true);
+    xhttp.send();
+  }
+  </script>
+
+</body>
+</html>
