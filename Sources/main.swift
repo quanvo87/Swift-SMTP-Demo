@@ -5,13 +5,13 @@ import LoggerAPI
 
 // MARK: - SMTP
 // The SMTP server you are going to connect to
-let hostname = "smtp.gmail.com"
+let hostname = ""
 
 // The email you will be sending from
-let email = "kiturasmtp@gmail.com"
+let email = ""
 
 // The password to the email
-let password = "ibm12345"
+let password = ""
 
 // Our SSL certificate files are in the same folder as `main.swift`. We are just
 // grabbing the path here to reference them later.
@@ -43,7 +43,7 @@ let smtp = SMTP(hostname: hostname,
                 ssl: ssl)
 
 // The `User` object that will act as our sender
-let sender = User(name: "Swift-SMTP Tester",
+let sender = User(name: "Swift-SMTP Demo",
                   email: email)
 
 // MARK: - Kitura HTTP Server
@@ -66,7 +66,7 @@ router.get("/send/:email") { req, res, _ in
     // Create the `Mail` object that will be sent
     let mail = Mail(from: sender,
                     to: [receiver],
-                    subject: "Swift-SMTP Test",
+                    subject: "Swift-SMTP Test Email",
                     text: "Hello, world!")
 
     // Send the mail object
@@ -77,7 +77,7 @@ router.get("/send/:email") { req, res, _ in
         if let error = error {
             message = "Send failed: " + String(describing: error)
         } else {
-            message = "Email successfully sent! Try checking your email now."
+            message = "Email successfully sent! You should see it in your sent box."
         }
 
         // Send the response
@@ -91,4 +91,3 @@ router.get("/send/:email") { req, res, _ in
 
 Kitura.addHTTPServer(onPort: 8080, with: router)
 Kitura.run()
-
