@@ -1,5 +1,5 @@
 # Swift-SMTP-Demo
-A demo server that uses Swift-SMTP to send emails.
+A demo server that uses [Swift-SMTP](https://github.com/IBM-Swift/Swift-SMTP) to send emails.
 
 ## Getting Started
 
@@ -13,4 +13,6 @@ Run `swift build`
 
 Run `.build/debug/Swift-SMTP-Demo`
 
-The demo server is now running. Open up your browser to `localhost:8080` to begin playing with the demo.
+The demo server is now running. Open your browser to `localhost:8080`.
+
+![demo screenshot](https://github.com/quanvo87/Swift-SMTP-Demo/blob/master/Assets/demo%20screenshot.png)
