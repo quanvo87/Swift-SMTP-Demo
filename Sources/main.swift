@@ -1,3 +1,4 @@
+import Foundation
 import Kitura
 import SwiftSMTP
 import HeliumLogger
@@ -13,24 +14,20 @@ let email = ""
 // The password to the email
 let password = ""
 
-// Our SSL certificate files are in the same folder as `main.swift`. We are just
-// grabbing the path here to reference them later.
-let root = #file
-    .characters
-    .split(separator: "/", omittingEmptySubsequences: false)
-    .dropLast(1)
-    .map { String($0) }
-    .joined(separator: "/")
+// Our SSL certificate files are in the same directory as `main.swift`
+let dir: String = {
+    return URL(fileURLWithPath: #file).appendingPathComponent("..").standardized.path
+}()
 
 // Init an SSL instance depending on OS
 #if os(Linux)
-let cert = root + "/cert.pem"
-let key = root + "/key.pem"
+let cert = dir + "/cert.pem"
+let key = dir + "/key.pem"
 let ssl = SSL(withCACertificateDirectory: nil,
               usingCertificateFile: cert,
               withKeyFile: key)
 #else
-let cert = root + "/cert.pfx"
+let cert = dir + "/cert.pfx"
 let certPassword = "kitura"
 let ssl = SSL(withChainFilePath: cert,
               withPassword: certPassword)
